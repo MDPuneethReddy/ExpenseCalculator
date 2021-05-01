@@ -10,8 +10,13 @@ export const Main:React.FC=()=>{
         type==="credit"?
         setAmount(amount+value): setAmount(amount-value)
     }
-    const setList=(value:any)=>{
-        setMyList([...myList, value])
+    const setList=(amount:number,description:string)=>{
+        let newEntity={
+            amount:amount,
+            description:description
+        }
+        setMyList([...myList, newEntity])
+        console.log(myList)
     }
     return(
         <div >
