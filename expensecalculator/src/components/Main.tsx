@@ -1,19 +1,36 @@
-import { Button, Space } from 'antd'
-import * as React from 'react'
-import { AddMoney } from './AddMoney'
-import { PrintList } from './PrintList'
-import { SubMoney } from './SubMoney'
+import { Col,Row, Space } from 'antd'
+import React,{useState} from 'react'
+import { CreditMoney } from './CreditMoney';
+import { DebitMoney } from './DebitMoney';
+import { PrintList } from './PrintList';
 export const Main:React.FC=()=>{
-    const [amount,setAmount]=React.useState<number>(0)
-    const [myList,setMyList]=React.useState<Array<any>>([])
+    const [amount,setAmount]=useState<number>(0)
+    const [myList,setMyList]=useState<Array<any>>([])
+    const addSubstractAmount=(value:number,type:string)=>{
+        type==="credit"?
+        setAmount(amount+value): setAmount(amount-value)
+    }
+    const setList=(value:any)=>{
+        setMyList([...myList, value])
+    }
     return(
         <div >
-            <h1>{amount}</h1>
-           <Space>
-            <AddMoney amount={amount} setAmount={setAmount} myList={myList} setMyList={setMyList}/>
-            <SubMoney amount={amount} setAmount={setAmount} myList={myList} setMyList={setMyList}/>
-            </Space>
-            <PrintList myList={myList}/>
+            <Row >
+                {amount}
+           </Row>
+           <Row>
+               <Space>
+               <Col>
+                   <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
+               </Col>
+               <Col>
+                   <DebitMoney setList={setList} addSubstract={addSubstractAmount}/>
+               </Col>
+               </Space>
+           </Row>
+            <Row>
+                <PrintList myList={myList} />
+            </Row>
         </div>
     )
 }
