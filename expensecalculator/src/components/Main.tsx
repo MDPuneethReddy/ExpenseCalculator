@@ -6,7 +6,6 @@ import { PrintList } from './PrintList';
 export const Main:React.FC=()=>{
     const [amount,setAmount]=useState<number>(0)
     const [myList,setMyList]=useState<Array<any>>([])
-    const [categories,setcategories]=useState<Array<any>>(["food"])
     const addSubstractAmount=(value:number,type:string)=>{
         type==="Credit"?
         setAmount(amount+value): setAmount(amount-value)
@@ -33,7 +32,7 @@ export const Main:React.FC=()=>{
                    <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>
                <Col span={12}>
-                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} categories={categories}/>
+                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>
                
            </Row>

@@ -1,15 +1,16 @@
 import { Modal,Input, Button,InputNumber, message,Dropdown, Menu} from 'antd';
 import React,{ useState } from 'react';
-import { MinusOutlined,DownOutlined } from '@ant-design/icons';
+import { MinusOutlined,} from '@ant-design/icons';
+import {  DropDown } from './DropDown';
 interface Iprops{
     setList:any,
     addSubstract:any,
-    categories:any,
 }
 export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount,setAmount]=useState<number>(0)
   const [description,setDescription]=useState<string>("")
+  const [categories,setCategories]=useState<Array<any>>(["Food","Shopping"])
   const [category,setCategory]=useState<string>("")
   const showModal = () => {
     setIsModalVisible(true);
@@ -42,29 +43,16 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setCategory("")
     setIsModalVisible(false);
   };
-  const onClick = ({ key }:any) => {
-    setCategory(props.categories[key])
-  };
-  const menu = (
-    <Menu onClick={onClick}>
-       {props.categories.map((category:any,index:any)=>{
-    return <Menu.Item key={index}>{category}</Menu.Item>
-  })}
-    </Menu>
-  );
-
   return (
     <>
       <Button type="primary" onClick={showModal} danger>
         Debit<MinusOutlined />
       </Button>
-      <Modal title="Debit Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}> 
-      <p style={{float:"right",color:"red"}}>All fields are required</p>
-      <Dropdown overlay={menu}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-             {category===""? "Choose Category":category}  <DownOutlined />
-            </a>
-          </Dropdown>
+      <Modal title="Debit Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <div style={{float:"right",color:"red"}}>
+      <p >All fields are required</p>
+      </div>
+      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} />
       <InputNumber style={{width:"100%"}} defaultValue={0} autoFocus={true} onChange={(value)=>{
         setAmount(value)
       }} />
