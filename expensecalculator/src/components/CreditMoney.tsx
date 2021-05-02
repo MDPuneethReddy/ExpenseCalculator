@@ -1,4 +1,5 @@
-import { Form,Modal,Input, Button,InputNumber, message} from 'antd';
+import { Modal,Input, Button,InputNumber, message} from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import React,{ useState } from 'react';
 interface Iprops{
     setList:any,
@@ -21,8 +22,8 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     }
     if(amount>0 && description!==""){
         const currentDate=new Date().toLocaleTimeString()
-        props.addSubstract(amount,"credit")
-        props.setList(amount,description,"credit",currentDate)
+        props.addSubstract(amount,"Credit")
+        props.setList(amount,description,"Credit",currentDate)
         setIsModalVisible(false);
     }
     setAmount(0)
@@ -40,7 +41,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Credit
+        Credit<PlusOutlined />
       </Button>
       <Modal title="Add Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}> 
       <p style={{float:"right",color:"red"}}> * All fields are required</p>
