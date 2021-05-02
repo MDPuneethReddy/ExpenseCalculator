@@ -10,10 +10,13 @@ export const Main:React.FC=()=>{
         type==="credit"?
         setAmount(amount+value): setAmount(amount-value)
     }
-    const setList=(amount:number,description:string)=>{
+    const setList=(amount:number,description:string,type:string, date:string)=>{
         let newEntity={
+            id:myList.length+1,
             amount:amount,
-            description:description
+            description:description,
+            type:type,
+            date:date,
         }
         setMyList([...myList, newEntity])
         console.log(myList)
@@ -21,20 +24,19 @@ export const Main:React.FC=()=>{
     return(
         <div >
             <Row >
-                {amount}
+                <div style={{width:"100%"}}>Balance : {amount}</div> 
            </Row>
-           <Row>
-               <Space>
-               <Col>
+           <Row>  
+               <Col span={12}>
                    <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>
-               <Col>
+               <Col span={12}>
                    <DebitMoney setList={setList} addSubstract={addSubstractAmount}/>
                </Col>
-               </Space>
+               
            </Row>
-            <Row>
-                <PrintList myList={myList} />
+            <Row >
+                <PrintList myList={myList} setMyList={setMyList}/>
             </Row>
         </div>
     )

@@ -20,12 +20,13 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
         message.error("description cannot be empty")
     }
     if(amount>0 && description!==""){
+        const currentDate=new Date().toLocaleTimeString()
         props.addSubstract(amount,"credit")
-        props.setList(amount,description)
-        setAmount(0)
-        setDescription("")
+        props.setList(amount,description,"credit",currentDate)
         setIsModalVisible(false);
     }
+    setAmount(0)
+    setDescription("")
     
   };
 
@@ -37,7 +38,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
  
 
   return (
-    <>
+    <div>
       <Button type="primary" onClick={showModal}>
         Credit
       </Button>
@@ -46,10 +47,10 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     <InputNumber style={{width:"100%"}} defaultValue={0} autoFocus={true} onChange={(value)=>{
         setAmount(value)
     }} />
-    <Input placeholder="Enter the description" value={description} onChange={(e)=>{
+    <Input  placeholder="Enter the description" value={description} onChange={(e)=>{
         setDescription(e.target.value)
     }} />
       </Modal>
-    </>
+    </div>
   );
 };

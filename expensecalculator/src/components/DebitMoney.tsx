@@ -20,13 +20,13 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
         message.error("description cannot be empty")
     }
     if(description!=="" && amount>0){
+        const currentDate=new Date().toLocaleTimeString()
         props.addSubstract(amount,"debit")
-        props.setList(amount,description)
-        setAmount(0)
-        setDescription("")
+        props.setList(amount,description,"debit",currentDate)
         setIsModalVisible(false);
     }
-    setIsModalVisible(false);
+    setAmount(0)
+    setDescription("")
   };
 
   const handleCancel = () => {
