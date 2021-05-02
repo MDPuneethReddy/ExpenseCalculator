@@ -38,7 +38,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
  
 
   return (
-    <div>
+    <>
       <Button type="primary" onClick={showModal}>
         Credit
       </Button>
@@ -47,10 +47,10 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     <InputNumber style={{width:"100%"}} defaultValue={0} autoFocus={true} onChange={(value)=>{
         setAmount(value)
     }} />
-    <Input  placeholder="Enter the description" value={description} onChange={(e)=>{
+    <Input placeholder="Enter the description" value={description} onChange={(e)=>{
         setDescription(e.target.value)
     }} />
       </Modal>
-    </div>
+    </>
   );
 };

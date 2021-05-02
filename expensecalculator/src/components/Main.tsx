@@ -35,7 +35,7 @@ export const Main:React.FC=()=>{
                </Col>
                
            </Row>
-            <Row >
+            <Row>
                 <PrintList myList={myList} setMyList={setMyList}/>
             </Row>
         </div>
