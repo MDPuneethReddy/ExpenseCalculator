@@ -16,6 +16,11 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             key: 'date'
           },
           {
+            title: 'Category',
+            dataIndex: 'category',
+            key: 'category',
+          },
+          {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
@@ -26,7 +31,7 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             key: 'type',
             render:(type:any)=>(
                 <>
-                {type==="credit"?<p style={{backgroundColor:"lightblue"}}>{type}</p>:<p style={{backgroundColor:"lightred"}}>{type}</p>}
+                {type==="Credit"?<p style={{paddingTop:"10px", color:"blue"}}>{type}</p>:<p style={{paddingTop:"10px", color:"red"}}>{type}</p>}
                 </>
             )
           },
