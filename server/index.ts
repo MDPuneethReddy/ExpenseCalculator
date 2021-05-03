@@ -1,5 +1,6 @@
 import * as express from "express"
 import * as cors from "cors"
+import { connection } from "./connection/connection"
 require('dotenv').config()
 const app=express()
 app.use(cors())
@@ -9,4 +10,7 @@ app.get("/api",(req,res)=>{
 })
 app.listen(PORT,()=>{
     console.log(` server running on ${PORT}`)
+})
+connection.then((connection:any)=>{
+    console.log("connected")
 })
