@@ -5,10 +5,18 @@ import { DebitMoney } from './DebitMoney';
 import { PrintList } from './PrintList';
 export const Main:React.FC=()=>{
     const [amount,setAmount]=useState<number>(0)
+    const [totalCredit,setTotalCredit]=useState<number>(0)
+    const [totalDebit,setTotalDebit]=useState<number>(0)
     const [myList,setMyList]=useState<Array<any>>([])
     const addSubstractAmount=(value:number,type:string)=>{
-        type==="Credit"?
-        setAmount(amount+value): setAmount(amount-value)
+        if(type==="Credit"){
+        setAmount(amount+value)
+        setTotalCredit(totalCredit+value)
+    }
+        else{
+            setAmount(amount-value)
+            setTotalDebit(totalDebit+value)
+        }
     }
     const setList=(amount:number,description:string,type:string, date:string,category?:string)=>{
         let newEntity={
@@ -36,8 +44,17 @@ export const Main:React.FC=()=>{
                </Col>
                
            </Row>
-            <Row>
-                <PrintList myList={myList} setMyList={setMyList}/>
+           <Row style={{paddingTop:"10px",paddingBottom:"10px"}}>  
+               <Col span={12}>
+                   Total Credit Amount - {totalCredit}
+               </Col>
+               <Col span={12}>
+                   Total Debit Amount - {totalDebit}
+               </Col>
+               
+           </Row>
+            <Row >
+                <PrintList myList={myList} setMyList={setMyList} />
             </Row>
         </div>
     )

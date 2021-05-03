@@ -1,4 +1,5 @@
 import { Button, Space, Table} from "antd";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons"
 import React from "react"
 interface Iprops{
     myList:any,
@@ -6,8 +7,10 @@ interface Iprops{
 }
 export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
     const deleteRecord=(id:any)=>{
-        // console.log(props.myList)
-        // props.setMyList(props.myList.splice(id,1))
+        console.log(id,props.myList)
+        let newList=[...props.myList]
+        newList.splice(id-1,1)
+        props.setMyList(newList)
     }
     const columns = [
         {
@@ -46,10 +49,12 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             key: 'action',
             render: (record:any) => (
               <Space size="middle">  
-                <Button >Edit</Button>
-                <Button onClick={()=>{
+                <Button  type="primary" shape="circle" onClick={()=>{
+                
+                }}> <span><EditOutlined /></span></Button>
+                <Button  danger type="primary" shape="circle" onClick={()=>{
                     deleteRecord(record.id)
-                }}>Delete</Button>
+                }}> <span><DeleteOutlined /></span></Button>
               </Space>
             ),
           },
