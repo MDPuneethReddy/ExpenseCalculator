@@ -1,3 +1,5 @@
+import { expenseLog } from "./entities/ExpenseLog";
+
 export default[{
     name:"development",
     type: process.env.REACT_TYPEORM_TYPE ,
@@ -6,14 +8,14 @@ export default[{
     username: process.env.REACT_TYPEORM_USERNAME,
     password: process.env.REACT_TYPEORM_PASSWORD,
     database: process.env.REACT_TYPEORM_DATABASE,
-    entities: [],
+    entities: [expenseLog],
     synchronize: true,
     logging: false
   },{
     name:"test",
     type:"sqlite",
     database:":memory:",
-    entities:[],
+    entities:[expenseLog],
     logging:true,
     synchronize:true
   }]
