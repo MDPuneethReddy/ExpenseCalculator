@@ -53,8 +53,8 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
       <p >All fields are required</p>
       </div>
       <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} />
-      <InputNumber style={{width:"100%"}} defaultValue={0} autoFocus={true} onChange={(value)=>{
-        setAmount(value)
+      <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
+        setAmount(+e.target.value)
       }} />
       <Input  placeholder="Enter the description" value={description} onChange={(e)=>{
         setDescription(e.target.value)

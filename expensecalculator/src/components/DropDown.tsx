@@ -25,7 +25,7 @@ export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
     return(
         <Select
         style={{ width: 240 }}
-        placeholder="custom dropdown render"
+        placeholder="choose category"
         onChange={chooseCategory}
         dropdownRender={menu => (
           <div>
@@ -37,7 +37,7 @@ export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
                 style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
                 onClick={addItem}
               >
-                <PlusOutlined /> Add item
+                <PlusOutlined /> Add Category
               </a>
             </div>
           </div>
