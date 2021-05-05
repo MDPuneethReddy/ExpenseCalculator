@@ -50,7 +50,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
       </Button>
       <Modal title="Debit Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <div style={{float:"right",color:"red"}}>
-      <p >All fields are required</p>
+      <p > * All fields are required</p>
       </div>
       <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} />
       <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
