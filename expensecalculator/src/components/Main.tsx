@@ -3,6 +3,7 @@ import React,{useState} from 'react'
 import { CreditMoney } from './CreditMoney';
 import { DebitMoney } from './DebitMoney';
 import { PrintList } from './PrintList';
+import { ToolHelpers } from './ToolHelpers';
 export const Main:React.FC=()=>{
     const [amount,setAmount]=useState<number>(0)
     const [myList,setMyList]=useState<Array<any>>([])
@@ -45,6 +46,9 @@ export const Main:React.FC=()=>{
            <Row style={{paddingTop:"10px",paddingBottom:"10px"}}>
                <Col span={12}><h3>Total Credit - {totalCreditAmount}</h3></Col>
                <Col span={12}><h3>Total Debit -{totalDebitAmount}</h3></Col>
+           </Row>
+           <Row>
+               <ToolHelpers myList={myList}/>
            </Row>
             <Row>
                 <PrintList myList={myList} setMyList={setMyList}/>
