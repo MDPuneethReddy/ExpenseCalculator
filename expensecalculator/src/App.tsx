@@ -1,12 +1,16 @@
 import React from 'react';
-import './App.css';
 import { Main } from './components/Main';
 import 'antd/dist/antd.css';
+import { Registration } from './components/auth/Registration';
+import { Login } from './components/auth/Login';
+import { Router, Link } from "@reach/router"
 function App() {
   return (
-    <div className="App">
-      <Main />
-    </div>
+    <Router>
+      <Registration path="/registration" />
+      <Login path="/login" />
+      <Main path="/" />
+      </Router>
   );
 }
 
