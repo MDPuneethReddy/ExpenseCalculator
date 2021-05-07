@@ -1,9 +1,16 @@
-import { Col,Row } from 'antd'
-import React,{useState} from 'react'
+import { navigate, RouteComponentProps } from '@reach/router';
+import { Button, Col,message,Row } from 'antd'
+import React,{useEffect, useState} from 'react'
 import { CreditMoney } from './CreditMoney';
 import { DebitMoney } from './DebitMoney';
+import { auth } from './firebase';
 import { PrintList } from './PrintList';
-export const Main:React.FC=()=>{
+interface Iprops extends RouteComponentProps{
+    location?:any
+}
+export const Main:React.FC<Iprops>=(props:Iprops)=>{
+    const [currentUser,setCurrentUser]=useState()
+    const [login,setLogin]=useState<boolean>(false)
     const [amount,setAmount]=useState<number>(0)
     const [myList,setMyList]=useState<Array<any>>([])
     const [totalDebitAmount,setTotalDebitAmount]=useState<number>(0)
@@ -29,10 +36,34 @@ export const Main:React.FC=()=>{
         setMyList([newEntity,...myList])
         console.log(myList)
     }
+    // useEffect(()=>{
+    //     if(typeof currentUser==="undefined"){
+    //         navigate("/login")
+    //     }
+    // },[])
+    useEffect(()=>{
+        console.log(props)
+        if( props.location.state  && typeof props.location.state.user!=="undefined"){
+            setCurrentUser(props.location.state.user)
+            return
+        }
+        if(typeof currentUser==="undefined"){
+            navigate("/login")
+        }
+    },[props])
     return(
         <div >
             <Row >
-                <div style={{width:"100%"}}><h1>Balance : {amount}</h1></div> 
+            <div><h1>Balance : {amount}</h1></div> 
+            <Button style={{float:"right"}} onClick={()=>{
+                    auth.signOut().then(result=>{
+                        console.log(result)
+                        setCurrentUser(undefined)
+                        navigate("/login")
+                    }).catch(error=>{
+                        message.error(error.message)
+                    })
+                }}>SignOut</Button>  
            </Row>
            <Row>  
                <Col span={12}>
