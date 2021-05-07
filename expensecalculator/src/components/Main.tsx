@@ -52,10 +52,13 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
         }
     },[props])
     return(
-        <div >
+        <div style={{width:"100%"}}>
             <Row >
-            <div><h1>Balance : {amount}</h1></div> 
-            <Button style={{float:"right"}} onClick={()=>{
+            <Col style={{textAlign:"center",width:"90%"}}>
+            <h1 >Balance : {amount}</h1>
+            </Col>
+            <Col style={{width:"10%"}}>
+            <Button size="small" type="primary" danger onClick={()=>{
                     auth.signOut().then(result=>{
                         console.log(result)
                         setCurrentUser(undefined)
@@ -63,19 +66,21 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                     }).catch(error=>{
                         message.error(error.message)
                     })
-                }}>SignOut</Button>  
+                }}>SignOut
+            </Button>  
+            </Col>
            </Row>
-           <Row>  
-               <Col span={12}>
+           <Row >  
+               <Col span={12} style={{textAlign:"center"}}>
                    <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>
-               <Col span={12}>
+               <Col span={12} style={{textAlign:"center"}}>
                    <DebitMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>       
            </Row>
            <Row style={{paddingTop:"10px",paddingBottom:"10px"}}>
-               <Col span={12}><h3>Total Credit - {totalCreditAmount}</h3></Col>
-               <Col span={12}><h3>Total Debit -{totalDebitAmount}</h3></Col>
+               <Col span={12} style={{textAlign:"center"}}><h3>Total Credit - {totalCreditAmount}</h3></Col>
+               <Col span={12} style={{textAlign:"center"}}><h3>Total Debit -{totalDebitAmount}</h3></Col>
            </Row>
             <Row>
                 <PrintList myList={myList} setMyList={setMyList}/>
