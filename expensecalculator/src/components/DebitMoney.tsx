@@ -10,8 +10,9 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount,setAmount]=useState<number>(0)
   const [description,setDescription]=useState<string>("")
-  const [categories,setCategories]=useState<Array<any>>(["Food","Shopping"])
+  const [categories,setCategories]=useState<Array<any>>(["Food"])
   const [category,setCategory]=useState<string>("")
+  const [selected,setSelected]=useState<any>()
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -35,6 +36,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setAmount(0)
     setDescription("")
     setCategory("")
+    setSelected(null)
   };
 
   const handleCancel = () => {
@@ -42,6 +44,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setDescription("")
     setCategory("")
     setIsModalVisible(false);
+    setSelected(null)
   };
   return (
     <>
@@ -52,7 +55,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
         <div style={{float:"right",color:"red"}}>
       <p > * All fields are required</p>
       </div>
-      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} />
+      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
       <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
         setAmount(+e.target.value)
       }} />

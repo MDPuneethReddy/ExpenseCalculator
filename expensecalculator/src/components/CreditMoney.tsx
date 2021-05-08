@@ -12,6 +12,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   const [description,setDescription]=useState<string>("")
   const [categories,setCategories]=useState<Array<any>>(["Funds"])
   const [category,setCategory]=useState<string>("")
+  const [selected,setSelected]=useState<any>()
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -35,6 +36,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     setAmount(0)
     setDescription("")
     setCategory("")
+    setSelected(null)
   };
 
   const handleCancel = () => {
@@ -42,6 +44,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     setDescription("")
     setCategory("")
     setIsModalVisible(false);
+    setSelected(null)
   };
  
 
@@ -52,7 +55,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
       </Button>
       <Modal title="Add Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}> 
       <p style={{float:"right",color:"red"}}> * All fields are required</p>
-      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} />
+      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
 
     <Input style={{width:"100%"}} defaultValue={0} value={amount} autoFocus={true} onChange={(e)=>{
         setAmount(+e.target.value)
