@@ -6,6 +6,9 @@ export class expenseLog {
     id: number;
 
     @Column()
+    email: string;
+
+    @Column()
     category: string;
 
     @Column()

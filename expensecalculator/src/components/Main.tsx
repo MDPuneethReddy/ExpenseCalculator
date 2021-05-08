@@ -5,12 +5,12 @@ import { CreditMoney } from './CreditMoney';
 import { DebitMoney } from './DebitMoney';
 import { auth } from './firebase';
 import { PrintList } from './PrintList';
+import axios from "axios"
 interface Iprops extends RouteComponentProps{
     location?:any
 }
 export const Main:React.FC<Iprops>=(props:Iprops)=>{
     const [currentUser,setCurrentUser]=useState()
-    const [login,setLogin]=useState<boolean>(false)
     const [amount,setAmount]=useState<number>(0)
     const [myList,setMyList]=useState<Array<any>>([])
     const [totalDebitAmount,setTotalDebitAmount]=useState<number>(0)
@@ -24,33 +24,54 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             setTotalDebitAmount(totalDebitAmount+value)
         }
     }
-    const setList=(amount:number,description:string,type:string, date:string,category?:string)=>{
+    const getData=async (user:any)=>{
+        console.log(user)
+        axios.get("http://localhost:3333/api/expenseLog",{
+            headers:{
+                email:user
+            }
+        }).then((response:any)=>{
+                console.log("getResponse",response)
+                setMyList(response.data.payload)
+            }).catch((error:any)=>{
+                console.log(error)
+            })
+    }
+    const setList=async (amount:number,description:string,type:string, date:string,category?:string)=>{
         let newEntity={
-            id:myList.length+1,
             amount:amount,
             description:description,
             type:type,
-            date:date,
             category:category
         }
-        setMyList([newEntity,...myList])
+        axios.post("http://localhost:3333/api/expenseLog",{
+            email:currentUser,
+            amount:amount,
+            description:description,
+            type:type,
+            category:category
+        }).then(async (response:any)=>{
+            console.log(response)
+            await getData(currentUser)
+        }).catch((error:any)=>{
+            console.log(error)
+        })
         console.log(myList)
     }
-    // useEffect(()=>{
-    //     if(typeof currentUser==="undefined"){
-    //         navigate("/login")
-    //     }
-    // },[])
+    console.log("currentuser",currentUser)
     useEffect(()=>{
         console.log(props)
         if( props.location.state  && typeof props.location.state.user!=="undefined"){
             setCurrentUser(props.location.state.user)
-            return
         }
-        if(typeof currentUser==="undefined"){
+        else if(typeof currentUser==="undefined"){
             navigate("/login")
         }
-    },[props])
+        getData(currentUser)
+    },[])
+    useEffect(() => {
+       getData(currentUser)
+    }, [currentUser])
     return(
         <div style={{width:"100%"}}>
             <Row >
