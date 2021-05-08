@@ -1,11 +1,11 @@
 import { navigate, RouteComponentProps } from '@reach/router';
-import { Button, Col,message,Row } from 'antd'
+import { Col, Row } from 'antd'
 import React,{useEffect, useState} from 'react'
 import { CreditMoney } from './CreditMoney';
 import { DebitMoney } from './DebitMoney';
-import { auth } from './firebase';
 import { PrintList } from './PrintList';
 import axios from "axios"
+import { SignOut } from './SignOut';
 interface Iprops extends RouteComponentProps{
     location?:any
 }
@@ -78,17 +78,8 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             <Col style={{textAlign:"center",width:"90%"}}>
             <h1 >Balance : {amount}</h1>
             </Col>
-            <Col style={{width:"10%"}}>
-            <Button size="small" type="primary" danger onClick={()=>{
-                    auth.signOut().then(result=>{
-                        console.log(result)
-                        setCurrentUser(undefined)
-                        navigate("/login")
-                    }).catch(error=>{
-                        message.error(error.message)
-                    })
-                }}>SignOut
-            </Button>  
+            <Col style={{textAlign:"right",width:"10%"}}>
+            <SignOut currentUser={currentUser} setCurrentUser={setCurrentUser}/>    
             </Col>
            </Row>
            <Row >  
