@@ -5,6 +5,8 @@ interface Iprops {
   categories:any,
   setCategories:any,
   setCategory:any,
+  selected:any,
+  setSelected:any,
 }
 export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
   const [name,setName]=useState<string>("")
@@ -21,10 +23,12 @@ export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
       };
       const chooseCategory=(value:any)=>{
         props.setCategory(props.categories[value])
+        props.setSelected(value)
       }
     return(
         <Select
         style={{ width: 240 }}
+        value={props.selected}
         placeholder="choose category"
         onChange={chooseCategory}
         dropdownRender={menu => (
