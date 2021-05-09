@@ -3,6 +3,7 @@ import { DeleteOutlined,EditOutlined,FilePdfOutlined} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import {CSVLink} from "react-csv"
 import React, { useRef } from "react"
+import { render } from "react-dom";
 interface Iprops{
     myList:any,
     setMyList:any,
@@ -20,7 +21,12 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
         {
             title: 'Date',
             dataIndex: 'date',
-            key: 'date'
+            key: 'date',
+            render:(date:any)=>(
+             <>
+             {new Date(date).toLocaleTimeString()}
+             </>
+            )
           },
           {
             title: 'Category',
@@ -80,7 +86,7 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             </Button>
         <Button onClick={handlePrint} type="primary" danger><FilePdfOutlined /> Export to PDF </Button>
         </Space>
-        <div ref={componentRef}>
+        <div ref={componentRef} >
         {props.myList && 
         <Table  defaultExpandAllRows={true} columns={columns} dataSource={props.myList} />
         }
