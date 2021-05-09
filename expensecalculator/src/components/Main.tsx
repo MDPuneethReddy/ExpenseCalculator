@@ -67,7 +67,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
         else if(typeof currentUser==="undefined"){
             navigate("/login")
         }
-        getData(currentUser)
+        // getData(currentUser)
     },[])
     useEffect(() => {
        getData(currentUser)

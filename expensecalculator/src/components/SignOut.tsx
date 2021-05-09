@@ -30,7 +30,7 @@ export const SignOut:React.FC<Iprops>=(props:Iprops)=> {
         onClose={onClose}
         visible={visible}
       >  
-        <p>logged as</p>
+        <p>logged account</p>
         <h4 style={{backgroundColor:"lightgrey"}}> {props.currentUser}</h4>
            <Button size="small" type="primary" danger onClick={()=>{
                     auth.signOut().then(result=>{
