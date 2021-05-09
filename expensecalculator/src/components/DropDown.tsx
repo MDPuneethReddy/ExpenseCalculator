@@ -18,7 +18,7 @@ export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
     
       const addItem = () => {
         console.log('addItem');
-        props.setCategories([...props.categories, name || `New item ${index++}`])
+        props.setCategories(name||"new item")
         setName("")
       };
       const chooseCategory=(value:any)=>{

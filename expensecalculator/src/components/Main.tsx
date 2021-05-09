@@ -37,13 +37,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                 console.log(error)
             })
     }
-    const setList=async (amount:number,description:string,type:string, date:string,category?:string)=>{
-        let newEntity={
-            amount:amount,
-            description:description,
-            type:type,
-            category:category
-        }
+    const setList=async (amount:number,description:string,type:string, category?:string)=>{
         axios.post("http://localhost:3333/api/expenseLog",{
             email:currentUser,
             amount:amount,
@@ -84,7 +78,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
            </Row>
            <Row >  
                <Col span={12} style={{textAlign:"center"}}>
-                   <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
+                   <CreditMoney setList={setList} addSubstract={addSubstractAmount} currentUser={currentUser}/>
                </Col>
                <Col span={12} style={{textAlign:"center"}}>
                    <DebitMoney setList={setList} addSubstract={addSubstractAmount} />

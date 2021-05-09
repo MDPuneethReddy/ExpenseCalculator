@@ -3,7 +3,6 @@ import { DeleteOutlined,EditOutlined,FilePdfOutlined} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import {CSVLink} from "react-csv"
 import React, { useRef } from "react"
-import { render } from "react-dom";
 interface Iprops{
     myList:any,
     setMyList:any,
