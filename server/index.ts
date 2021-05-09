@@ -2,6 +2,8 @@ import * as express from "express"
 import * as cors from "cors"
 import { connection } from "./connection/connection"
 import { expenseLog } from "./entities/ExpenseLog"
+import { creditCategory } from "./entities/creditCategory"
+import { debitCategory } from "./entities/debitCategory"
 require('dotenv').config()
 const app=express()
 app.use(cors())
@@ -16,6 +18,8 @@ app.listen(PORT,()=>{
 connection.then((connection:any)=>{
     console.log("connected")
     const expenseRepository=connection.getRepository(expenseLog)
+    const creditCategoryRepository=connection.getRepository(creditCategory)
+    const debitCategoryRepository=connection.getRepository(debitCategory)
     app.get("/api/expenseLog",async (req,res)=>{
         const email=req.headers.email
         console.log(email)
@@ -33,6 +37,15 @@ connection.then((connection:any)=>{
         res.send({
             message:"success",
             payload:result
+        })
+    })
+    app.get("/api/creditCategory",async(req,res)=>{
+        const email=req.headers.email
+        let creditCategory=await creditCategoryRepository.find({where:{email:email}})
+        console.log("creditCategory",creditCategory)
+        res.send({
+            message:"success",
+            payload:creditCategory
         })
     })
 }).catch(error=>{

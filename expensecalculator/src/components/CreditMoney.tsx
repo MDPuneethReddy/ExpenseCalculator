@@ -55,7 +55,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
         }
     }).then((response:any)=>{
             console.log("getcategories",response)
-            setCategories(response.data.payload)
+            // setCategories(response.data.payload)
         }).catch((error:any)=>{
             console.log(error)
         })
