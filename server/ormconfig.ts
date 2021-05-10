@@ -1,6 +1,6 @@
-import { expenseLog } from "./entities/ExpenseLog";
-import {creditCategory} from "./entities/creditCategory"
-import { debitCategory } from "./entities/debitCategory";
+import { expenseLog } from "./Routes/expenseLog/expenseLog";
+import {creditCategory} from "./Routes/creditCategory/creditCategory"
+import { debitCategory } from "./Routes/debitCategory/debitCategory";
 export default[{
     name:"development",
     type: process.env.REACT_TYPEORM_TYPE ,
