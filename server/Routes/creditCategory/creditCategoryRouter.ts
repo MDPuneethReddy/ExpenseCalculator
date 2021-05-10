@@ -35,7 +35,7 @@ connection.then(connection=>{
         const creditCategory=await creditCategoryRepository.findOne({where:{email:email}})
         console.log("creditCategory",creditCategory)
         let temp=creditCategory
-        temp[0].category.push(value)
+        temp.category.push(value)
         creditCategoryRepository.merge(creditCategory,temp)
         const result = await creditCategoryRepository.save(creditCategory);
         res.send({

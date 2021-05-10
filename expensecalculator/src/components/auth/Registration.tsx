@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Form, Input, Button, message, } from 'antd';
 import { RouteComponentProps } from "@reach/router";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 interface Iprops extends RouteComponentProps {
 }
 export const Registration=(props:Iprops)=>{  

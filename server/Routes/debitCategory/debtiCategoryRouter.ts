@@ -33,7 +33,7 @@ connection.then(connection=>{
         const value=req.body.value
         const debitCategory=await debitCategoryRepository.findOne({where:{email:email}})
         let temp=debitCategory
-        temp[0].category.push(value)
+        temp.category.push(value)
         debitCategoryRepository.merge(debitCategory,temp)
         const result = await debitCategoryRepository.save(debitCategory);
         res.send({

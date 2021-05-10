@@ -1,7 +1,7 @@
 import { navigate } from '@reach/router';
 import { Button, Drawer, message, Tooltip} from 'antd';
 import React, { useState } from 'react'
-import { auth } from './firebase';
+import { auth } from '../firebase/firebase';
 import { UserOutlined,LogoutOutlined } from '@ant-design/icons';
 interface Iprops{
     currentUser:any
