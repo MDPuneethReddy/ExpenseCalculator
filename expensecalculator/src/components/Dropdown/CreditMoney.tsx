@@ -1,14 +1,14 @@
-import { Modal,Input, Button,InputNumber, message,Dropdown, Menu} from 'antd';
+import { Modal,Input, Button,InputNumber, message} from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import React,{ useEffect, useState } from 'react';
-import { MinusOutlined,} from '@ant-design/icons';
-import {  DropDown } from './DropDown';
+import { DropDown } from './DropDown';
 import axios from 'axios';
 interface Iprops{
     setList:any,
     addSubstract:any,
     currentUser:any
 }
-export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
+export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount,setAmount]=useState<number>(0)
   const [description,setDescription]=useState<string>("")
@@ -30,8 +30,8 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
       message.error("choose a category or create new category")
     }
     if(description!=="" && amount>0 && category!==""){
-        props.addSubstract(amount,"Debit")
-        props.setList(amount,description,"Debit",category)
+        props.addSubstract(amount,"Credit")
+        props.setList(amount,description,"Credit",category)
         setIsModalVisible(false);
     }
     setAmount(0)
@@ -48,24 +48,24 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setSelected(null)
   };
   const getCategories=async(user:any)=>{
-    axios.get("http://localhost:3333/api/debitCategory",{
+    axios.get("http://localhost:3333/api/creditCategory",{
         headers:{
             email:user
         }
     }).then((response:any)=>{
-            console.log("getdebitcategories",response)
+            console.log("getcreditcategories",response)
             if(response.data.payload.length===0){
               setCategories([])
             }
             else{
             setCategories(response.data.payload[0].category)
             }
-            }).catch((error:any)=>{
+                  }).catch((error:any)=>{
             console.log(error)
         })
 }
-const addDebitCategory=(value:any)=>{
-  axios.put("http://localhost:3333/api/debitCategory",{
+const addCreditCategory=(value:any)=>{
+  axios.put("http://localhost:3333/api/creditCategory",{
       value:value
   },{
     headers:{
@@ -73,31 +73,30 @@ const addDebitCategory=(value:any)=>{
     }
   }).then(async (response:any)=>{
       console.log(response)
-      setCategories(response.data.payload[0].category)
+      setCategories(response.data.payload.category)
   }).catch((error:any)=>{
       console.log(error)
   })
 }
-useEffect(() => {
-  getCategories(props.currentUser)
- }, [props.currentUser])
- console.log("debit categories",categories)
+  useEffect(() => {
+   getCategories(props.currentUser)
+  }, [props.currentUser])
+  console.log("credit categories",categories)
   return (
     <>
-      <Button type="primary" onClick={showModal} danger>
-        Debit<MinusOutlined />
+      <Button type="primary" onClick={showModal}>
+        Credit<PlusOutlined />
       </Button>
-      <Modal title="Debit Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <div style={{float:"right",color:"red"}}>
-      <p > * All fields are required</p>
-      </div>
-      <DropDown categories={categories} setCategories={addDebitCategory} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
-      <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
+      <Modal title="Add Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}> 
+      <p style={{float:"right",color:"red"}}> * All fields are required</p>
+      <DropDown categories={categories} setCategories={addCreditCategory} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
+
+    <Input style={{width:"100%"}} defaultValue={0} value={amount} autoFocus={true} onChange={(e)=>{
         setAmount(+e.target.value)
-      }} />
-      <Input  placeholder="Enter the description" value={description} onChange={(e)=>{
+    }} />
+    <Input placeholder="Enter the description" value={description} onChange={(e)=>{
         setDescription(e.target.value)
-      }} />
+    }} />
       </Modal>
     </>
   );

@@ -2,7 +2,7 @@ import React from "react"
 import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { navigate, RouteComponentProps } from "@reach/router";
-import { auth } from "../firebase";
+import { auth } from "../firebase/firebase";
 
 
 interface Iprops extends RouteComponentProps{
