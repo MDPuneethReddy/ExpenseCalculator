@@ -48,24 +48,32 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     setSelected(null)
   };
   const getCategories=async(user:any)=>{
-    console.log(user)
     axios.get("http://localhost:3333/api/creditCategory",{
         headers:{
             email:user
         }
     }).then((response:any)=>{
-            console.log("getcategories",response)
-            // setCategories(response.data.payload)
-        }).catch((error:any)=>{
+            console.log("getcreditcategories",response)
+            if(response.data.payload.length===0){
+              setCategories([])
+            }
+            else{
+            setCategories(response.data.payload[0].category)
+            }
+                  }).catch((error:any)=>{
             console.log(error)
         })
 }
 const addCreditCategory=(value:any)=>{
-  axios.post("http://localhost:3333/api/creditCategory",{
+  axios.put("http://localhost:3333/api/creditCategory",{
       value:value
+  },{
+    headers:{
+      email:props.currentUser
+    }
   }).then(async (response:any)=>{
       console.log(response)
-      //getData()
+      setCategories(response.data.payload[0].category)
   }).catch((error:any)=>{
       console.log(error)
   })
@@ -73,6 +81,7 @@ const addCreditCategory=(value:any)=>{
   useEffect(() => {
    getCategories(props.currentUser)
   }, [props.currentUser])
+  console.log("credit categories",categories)
   return (
     <>
       <Button type="primary" onClick={showModal}>

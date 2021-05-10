@@ -11,7 +11,6 @@ interface Iprops {
 export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
   const [name,setName]=useState<string>("")
     const { Option } = Select;
-    let index = 0;
     const onNameChange = (e:any) => {
         setName(e.target.value)
       }

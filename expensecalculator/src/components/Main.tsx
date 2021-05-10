@@ -31,7 +31,6 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                 email:user
             }
         }).then((response:any)=>{
-                console.log("getResponse",response)
                 setMyList(response.data.payload)
             }).catch((error:any)=>{
                 console.log(error)
@@ -46,7 +45,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             category:category
         }).then(async (response:any)=>{
             console.log(response)
-            await getData(currentUser)
+            getData(currentUser)
         }).catch((error:any)=>{
             console.log(error)
         })
@@ -61,7 +60,6 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
         else if(typeof currentUser==="undefined"){
             navigate("/login")
         }
-        // getData(currentUser)
     },[])
     useEffect(() => {
        getData(currentUser)
@@ -81,7 +79,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                    <CreditMoney setList={setList} addSubstract={addSubstractAmount} currentUser={currentUser}/>
                </Col>
                <Col span={12} style={{textAlign:"center"}}>
-                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} />
+                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} currentUser={currentUser}/>
                </Col>       
            </Row>
            <Row style={{paddingTop:"10px",paddingBottom:"10px"}}>

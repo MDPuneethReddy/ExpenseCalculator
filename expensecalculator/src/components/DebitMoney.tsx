@@ -1,16 +1,18 @@
 import { Modal,Input, Button,InputNumber, message,Dropdown, Menu} from 'antd';
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { MinusOutlined,} from '@ant-design/icons';
 import {  DropDown } from './DropDown';
+import axios from 'axios';
 interface Iprops{
     setList:any,
     addSubstract:any,
+    currentUser:any
 }
 export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount,setAmount]=useState<number>(0)
   const [description,setDescription]=useState<string>("")
-  const [categories,setCategories]=useState<Array<any>>(["Food"])
+  const [categories,setCategories]=useState<Array<any>>([])
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
   const showModal = () => {
@@ -28,9 +30,8 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
       message.error("choose a category or create new category")
     }
     if(description!=="" && amount>0 && category!==""){
-        const currentDate=new Date().toLocaleTimeString()
         props.addSubstract(amount,"Debit")
-        props.setList(amount,description,"Debit",currentDate,category)
+        props.setList(amount,description,"Debit",category)
         setIsModalVisible(false);
     }
     setAmount(0)
@@ -46,6 +47,41 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setIsModalVisible(false);
     setSelected(null)
   };
+  const getCategories=async(user:any)=>{
+    axios.get("http://localhost:3333/api/debitCategory",{
+        headers:{
+            email:user
+        }
+    }).then((response:any)=>{
+            console.log("getdebitcategories",response)
+            if(response.data.payload.length===0){
+              setCategories([])
+            }
+            else{
+            setCategories(response.data.payload[0].category)
+            }
+            }).catch((error:any)=>{
+            console.log(error)
+        })
+}
+const addDebitCategory=(value:any)=>{
+  axios.put("http://localhost:3333/api/debitCategory",{
+      value:value
+  },{
+    headers:{
+      email:props.currentUser
+    }
+  }).then(async (response:any)=>{
+      console.log(response)
+      setCategories(response.data.payload[0].category)
+  }).catch((error:any)=>{
+      console.log(error)
+  })
+}
+useEffect(() => {
+  getCategories(props.currentUser)
+ }, [props.currentUser])
+ console.log("debit categories",categories)
   return (
     <>
       <Button type="primary" onClick={showModal} danger>
@@ -55,7 +91,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
         <div style={{float:"right",color:"red"}}>
       <p > * All fields are required</p>
       </div>
-      <DropDown categories={categories} setCategories={setCategories} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
+      <DropDown categories={categories} setCategories={addDebitCategory} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
       <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
         setAmount(+e.target.value)
       }} />
