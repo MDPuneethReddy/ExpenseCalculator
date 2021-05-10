@@ -8,8 +8,8 @@ export class debitCategory {
     @Column({unique:true})
     email: string;
 
-    @Column()
-    category: string;
+    @Column("simple-array")
+    category: string[];
 
     @CreateDateColumn()
     date: Date;

@@ -22,16 +22,13 @@ connection.then((connection:any)=>{
     const debitCategoryRepository=connection.getRepository(debitCategory)
     app.get("/api/expenseLog",async (req,res)=>{
         const email=req.headers.email
-        console.log(email)
         const expenseLog=await expenseRepository.find({where:{email:email}})
-        console.log(expenseLog)
         res.send({
             message:"success",
             payload:expenseLog
     })
     })
     app.post("/api/expenseLog",async (req,res)=>{
-        console.log("body",req.body)
         const expense=await expenseRepository.create(req.body)
         const result = await expenseRepository.save(expense);
         res.send({
@@ -42,11 +39,81 @@ connection.then((connection:any)=>{
     app.get("/api/creditCategory",async(req,res)=>{
         const email=req.headers.email
         let creditCategory=await creditCategoryRepository.find({where:{email:email}})
-        console.log("creditCategory",creditCategory)
+        console.log("creditget",creditCategory)
+        if(creditCategory.length===0){
+            const body={
+                        email:email,
+                        category:"Funds"
+            }
+            const creditCategory=creditCategoryRepository.create(body)
+            const result = await creditCategoryRepository.save(creditCategory);
+            let allCreditCategory=await creditCategoryRepository.find({where:{email:email}})
+
+            console.log("result",result)
+            res.send({
+                message:"success",
+                payload:allCreditCategory
+            })
+        }
+        else{
         res.send({
             message:"success",
             payload:creditCategory
         })
+    }
+    })
+    app.put("/api/creditCategory",async(req,res)=>{
+        const email=req.headers.email
+        const value=req.body.value
+        const creditCategory=await creditCategoryRepository.find({where:{email:email}})
+        console.log("creditCategory",creditCategory)
+        let temp=[...creditCategory]
+        temp[0].category.push(value)
+        creditCategoryRepository.merge(creditCategory,temp)
+        const result = await creditCategoryRepository.save(creditCategory);
+        res.send({
+            message:"success",
+            payload: result
+        })
+    // }
+    })
+    app.get("/api/debitCategory",async(req,res)=>{
+        const email=req.headers.email
+        let debitCategory=await debitCategoryRepository.find({where:{email:email}})
+        console.log("debitCategory",debitCategory)
+        if(debitCategory.length===0){
+            const body={
+                email:email,
+                category:"Food"
+    }
+    const debitCategory=debitCategoryRepository.create(body)
+    const result = await debitCategoryRepository.save(debitCategory);
+    let allDebitCategory=await debitCategoryRepository.find({where:{email:email}})
+    res.send({
+        message:"success",
+        payload:allDebitCategory
+    })
+        }
+        else{
+        res.send({
+            message:"success",
+            payload:debitCategory
+        })
+    }
+    })
+    app.put("/api/debitCategory",async(req,res)=>{
+        const email=req.headers.email
+        const value=req.body.value
+        const debitCategory=await debitCategoryRepository.find({where:{email:email}})
+        let temp=[...debitCategory]
+        temp[0].category.push(value)
+        debitCategoryRepository.merge(debitCategory,temp)
+        const result = await debitCategoryRepository.save(debitCategory);
+        res.send({
+            message:"success",
+            payload: result
+        })
+    // }
     })
 }).catch(error=>{
     console.log(error)
