@@ -1,4 +1,4 @@
-import { Modal,Input, Button,InputNumber, message,Dropdown, Menu} from 'antd';
+import { Modal,Input, Button, message} from 'antd';
 import React,{ useEffect, useState } from 'react';
 import { MinusOutlined,} from '@ant-design/icons';
 import {  DropDown } from './DropDown';
@@ -15,6 +15,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   const [categories,setCategories]=useState<Array<any>>([])
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -47,6 +48,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     setIsModalVisible(false);
     setSelected(null)
   };
+
   const getCategories=async(user:any)=>{
     axios.get("http://localhost:3333/api/debitCategory",{
         headers:{
@@ -64,6 +66,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
             console.log(error)
         })
 }
+
 const addDebitCategory=(value:any)=>{
   axios.put("http://localhost:3333/api/debitCategory",{
       value:value
@@ -78,10 +81,12 @@ const addDebitCategory=(value:any)=>{
       console.log(error)
   })
 }
+
 useEffect(() => {
   getCategories(props.currentUser)
  }, [props.currentUser])
  console.log("debit categories",categories)
+
   return (
     <>
       <Button type="primary" onClick={showModal} danger>

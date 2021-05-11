@@ -3,8 +3,6 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { navigate, RouteComponentProps } from "@reach/router";
 import { auth } from "../firebase/firebase";
-
-
 interface Iprops extends RouteComponentProps{
 
 }
@@ -19,8 +17,6 @@ export const Login:React.FC<Iprops>=(props:Iprops)=>{
         message.error(error.message)
       })
       };
-      
-    
     return(
         <div style={{textAlign: "center"}}>
         <h1 >Login Page</h1>

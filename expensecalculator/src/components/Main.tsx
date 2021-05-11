@@ -30,6 +30,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             console.log(error)
         })
     }
+
     const getData=async (user:any)=>{
         console.log(user)
         axios.get("http://localhost:3333/api/expenseLog",{
@@ -42,6 +43,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                 console.log(error)
             })
     }
+
     const setList=async (amount:number,description:string,type:string, category?:string)=>{
         axios.post("http://localhost:3333/api/expenseLog",{
             email:currentUser,
@@ -57,6 +59,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
         })
         console.log(myList)
     }
+
     console.log("currentuser",currentUser)
     const getTotalExpenseData=(user:any)=>{
         axios.get("http://localhost:3333/api/totalExpense",{
@@ -72,6 +75,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             console.log(error)
         })
     }
+
     useEffect(()=>{
         console.log(props)
         if( props.location.state  && typeof props.location.state.user!=="undefined"){
@@ -81,10 +85,12 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             navigate("/login")
         }
     },[])
+
     useEffect(() => {
        getData(currentUser)
        getTotalExpenseData(currentUser)
     }, [currentUser])
+    
     return(
         <div style={{width:"100%"}}>
             <Row >

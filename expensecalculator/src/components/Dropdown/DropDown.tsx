@@ -20,6 +20,7 @@ export const DropDown:React.FC<Iprops>=(props:Iprops)=>{
         props.setCategories(name||"new item")
         setName("")
       };
+      
       const chooseCategory=(value:any)=>{
         props.setCategory(props.categories[value])
         props.setSelected(value)

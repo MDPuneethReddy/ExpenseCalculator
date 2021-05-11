@@ -1,4 +1,4 @@
-import { Modal,Input, Button,InputNumber, message} from 'antd';
+import { Modal,Input, Button,message} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import React,{ useEffect, useState } from 'react';
 import { DropDown } from './DropDown';
@@ -15,6 +15,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   const [categories,setCategories]=useState<Array<any>>([])
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -47,6 +48,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
     setIsModalVisible(false);
     setSelected(null)
   };
+
   const getCategories=async(user:any)=>{
     axios.get("http://localhost:3333/api/creditCategory",{
         headers:{
@@ -64,6 +66,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
             console.log(error)
         })
 }
+
 const addCreditCategory=(value:any)=>{
   axios.put("http://localhost:3333/api/creditCategory",{
       value:value
@@ -78,10 +81,12 @@ const addCreditCategory=(value:any)=>{
       console.log(error)
   })
 }
+
   useEffect(() => {
    getCategories(props.currentUser)
   }, [props.currentUser])
   console.log("credit categories",categories)
+  
   return (
     <>
       <Button type="primary" onClick={showModal}>

@@ -3,7 +3,7 @@ import { Main } from './components/Main';
 import 'antd/dist/antd.css';
 import { Registration } from './components/auth/Registration';
 import { Login } from './components/auth/Login';
-import { Router, Link } from "@reach/router"
+import { Router} from "@reach/router"
 function App() {
   return (
     <Router>

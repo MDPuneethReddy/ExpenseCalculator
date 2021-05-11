@@ -1,5 +1,5 @@
 import { navigate } from '@reach/router';
-import { Button, Drawer, message, Tooltip} from 'antd';
+import { Button, Drawer, message} from 'antd';
 import React, { useState } from 'react'
 import { auth } from '../firebase/firebase';
 import { UserOutlined,LogoutOutlined } from '@ant-design/icons';
@@ -18,11 +18,9 @@ export const SignOut:React.FC<Iprops>=(props:Iprops)=> {
 
   return (
     <>
-      <Tooltip title="" >
       <Button style={{backgroundColor:"gray"}}type="primary" shape="circle" onClick={showDrawer}>
        <UserOutlined /> 
       </Button>
-      </Tooltip>
       <Drawer
         title="Profile"
         placement="right"
