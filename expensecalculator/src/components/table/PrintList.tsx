@@ -78,7 +78,7 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             key: 'action',
             render: (record:any) => (
               <Space size="middle">  
-                <Button type="primary" shape="circle" ><EditOutlined /></Button>
+                {/* <Button type="primary" shape="circle" ><EditOutlined /></Button> */}
                 <Button danger type="primary" shape="circle"onClick={()=>{
                     deleteRecord(record)
                 }}><DeleteOutlined /></Button>
