@@ -21,7 +21,15 @@ connection.then((connection:any)=>{
             payload:result
         })
     })
-    
+    expenseLogRouter.delete("/",async(req,res)=>{
+        const id=req.headers.id
+        const email=req.headers.email
+        const expenseLogDelete=await expenseRepository.delete(id)
+        console.log(expenseLogDelete)
+        res.json({
+            message:"success",
+        })
+    })
 }).catch(error=>{
     console.log(error)
 })

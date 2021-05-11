@@ -53,6 +53,25 @@ connection.then(connection=>{
             payload: result
         })
     })
+    totalExpenseRouter.put("/removeDelete",async(req,res)=>{
+        console.log(req.body)
+        const totalExpense=await totalExpenseRepository.findOne({where:{email:req.body.email}})
+        let temp=totalExpense
+        if(req.body.type==="Credit"){
+            temp.totalAmount=temp.totalAmount-req.body.amount
+            temp.totalCredit=temp.totalCredit-req.body.amount
+        }
+        else{
+            temp.totalAmount=temp.totalAmount+req.body.amount
+            temp.totalDebit=temp.totalDebit-req.body.amount
+        }
+        totalExpenseRepository.merge(totalExpense,temp)
+        const result = await totalExpenseRepository.save(totalExpense);
+        res.send({
+            message:"success",
+            payload: result
+        })
+    })
 }).catch(error=>{
     console.log(error)
 })
