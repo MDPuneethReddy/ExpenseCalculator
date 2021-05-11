@@ -3,12 +3,18 @@ import { Button, Drawer, message} from 'antd';
 import React, { useState } from 'react'
 import { auth } from '../firebase/firebase';
 import { UserOutlined,LogoutOutlined } from '@ant-design/icons';
+import { InitialState } from '../../store/reducer';
+import {useSelector,useDispatch} from "react-redux"
+import { setCurrentUser } from '../../store/dispatcher';
 interface Iprops{
-    currentUser:any
-    setCurrentUser:any
+   
 }
 export const SignOut:React.FC<Iprops>=(props:Iprops)=> {
+  const { currentUser} = useSelector<InitialState, InitialState>(
+    (state: InitialState) => state
+  );
     const [visible, setVisible] = useState(false);
+    const dispatch = useDispatch()
     const showDrawer = () => {
         setVisible(true);
       };
@@ -29,11 +35,11 @@ export const SignOut:React.FC<Iprops>=(props:Iprops)=> {
         visible={visible}
       >  
         <p>logged account</p>
-        <h4 style={{backgroundColor:"lightgrey"}}> {props.currentUser}</h4>
+        <h4 style={{backgroundColor:"lightgrey"}}> {currentUser}</h4>
            <Button size="small" type="primary" danger onClick={()=>{
                     auth.signOut().then(result=>{
                         console.log(result)
-                        props.setCurrentUser(undefined)
+                        dispatch(setCurrentUser(undefined))
                         navigate("/login")
                     }).catch(error=>{
                         message.error(error.message)

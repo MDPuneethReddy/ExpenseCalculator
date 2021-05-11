@@ -1,24 +1,26 @@
 import { Button, message, Space, Table} from "antd";
-import { DeleteOutlined,EditOutlined,FilePdfOutlined} from '@ant-design/icons';
+import { DeleteOutlined,FilePdfOutlined} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import {CSVLink} from "react-csv"
 import React, { useRef } from "react"
 import axios from "axios";
+import { InitialState } from "../../store/reducer";
+import {useSelector} from "react-redux"
 interface Iprops{
-    myList:any,
-    setMyList:any,
     getData:any,
     getTotalExpenseData:any,
-    currentUser:any
 }
 export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
+  const { currentUser,myList } = useSelector<InitialState, InitialState>(
+    (state: InitialState) => state
+  );
   const componentRef = useRef<any>();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
   const calculateTotalBalance=(record:any)=>{
     axios.put("http://localhost:3333/api/totalExpense/removeDelete",record).then(response=>{
-      props.getTotalExpenseData(props.currentUser)
+      props.getTotalExpenseData(currentUser)
     }).catch(error=>{
       console.log(error)
     })
@@ -87,14 +89,13 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
           },
         
     ]
-    console.log(props.myList)
     return(
       <div style={{width:"100%"}} >
         <Space style={{float:"right"}}>
           <Button type="primary">
         <CSVLink
               filename={"Expense_Table.csv"}
-              data={props.myList}
+              data={myList}
               className="btn btn-primary"
               onClick={()=>{
                 message.success("The file is downloading")
@@ -106,8 +107,8 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
         <Button onClick={handlePrint} type="primary" danger><FilePdfOutlined /> Export to PDF </Button>
         </Space>
         <div ref={componentRef} >
-        {props.myList && 
-        <Table  defaultExpandAllRows={true} columns={columns} dataSource={props.myList} />
+        {myList && 
+        <Table  defaultExpandAllRows={true} columns={columns} dataSource={myList} />
         }
         </div>
         </div>

@@ -3,19 +3,23 @@ import React,{ useEffect, useState } from 'react';
 import { MinusOutlined,} from '@ant-design/icons';
 import {  DropDown } from './DropDown';
 import axios from 'axios';
+import { InitialState } from '../../store/reducer';
+import {useSelector,useDispatch} from "react-redux"
+import { updateDebitCategory } from '../../store/dispatcher';
 interface Iprops{
     setList:any,
     addSubstract:any,
-    currentUser:any
 }
 export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
+  const { currentUser,debitCategory } = useSelector<InitialState, InitialState>(
+    (state: InitialState) => state
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount,setAmount]=useState<number>(0)
   const [description,setDescription]=useState<string>("")
-  const [categories,setCategories]=useState<Array<any>>([])
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
-
+  const dispatch = useDispatch()
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -57,10 +61,10 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
     }).then((response:any)=>{
             console.log("getdebitcategories",response)
             if(response.data.payload.length===0){
-              setCategories([])
+              dispatch(updateDebitCategory([]))
             }
             else{
-            setCategories(response.data.payload[0].category)
+              dispatch(updateDebitCategory(response.data.payload[0].category))
             }
             }).catch((error:any)=>{
             console.log(error)
@@ -72,20 +76,19 @@ const addDebitCategory=(value:any)=>{
       value:value
   },{
     headers:{
-      email:props.currentUser
+      email:currentUser
     }
   }).then(async (response:any)=>{
       console.log(response)
-      setCategories(response.data.payload.category)
+      dispatch(updateDebitCategory(response.data.payload.category))
   }).catch((error:any)=>{
       console.log(error)
   })
 }
 
 useEffect(() => {
-  getCategories(props.currentUser)
- }, [props.currentUser])
- console.log("debit categories",categories)
+  getCategories(currentUser)
+ }, [currentUser])
 
   return (
     <>
@@ -96,7 +99,7 @@ useEffect(() => {
         <div style={{float:"right",color:"red"}}>
       <p > * All fields are required</p>
       </div>
-      <DropDown categories={categories} setCategories={addDebitCategory} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
+      <DropDown categories={debitCategory} setCategories={addDebitCategory} setCategory={setCategory} selected={selected} setSelected={setSelected}/>
       <Input style={{width:"100%"}} value={amount}defaultValue={0} autoFocus={true} onChange={(e)=>{
         setAmount(+e.target.value)
       }} />

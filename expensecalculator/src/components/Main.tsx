@@ -6,16 +6,17 @@ import { DebitMoney } from './Dropdown/DebitMoney';
 import axios from "axios"
 import { SignOut } from './auth/SignOut';
 import { PrintList } from './table/PrintList';
+import { InitialState } from '../store/reducer';
+import {useSelector,useDispatch} from "react-redux"
+import { setCurrentUser, updateAmount, updateMyList, updateTotalCreditAmount, updateTotalDebitAmount } from '../store/dispatcher';
 interface Iprops extends RouteComponentProps{
     location?:any
 }
 export const Main:React.FC<Iprops>=(props:Iprops)=>{
-    const [currentUser,setCurrentUser]=useState()
-    const [amount,setAmount]=useState<number>(0)
-    const [myList,setMyList]=useState<Array<any>>([])
-    const [totalDebitAmount,setTotalDebitAmount]=useState<number>(0)
-    const [totalCreditAmount,setTotalCreditAmount]=useState<number>(0)
-
+    const { currentUser,amount,myList,totalCreditAmount,totalDebitAmount } = useSelector<InitialState, InitialState>(
+        (state: InitialState) => state
+      );
+    const dispatch=useDispatch()
     const addSubstractAmount=(value:number,type:string)=>{
         axios.put("http://localhost:3333/api/totalExpense",{
             email:currentUser,
@@ -23,9 +24,9 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             type:type
         }).then(response=>{
             console.log("totalCreditput",response)
-            setAmount(response.data.payload.totalAmount)
-            setTotalDebitAmount(response.data.payload.totalDebit)
-            setTotalCreditAmount(response.data.payload.totalCredit)
+            dispatch(updateAmount(response.data.payload.totalAmount))
+            dispatch(updateTotalDebitAmount(response.data.payload.totalDebit))
+            dispatch(updateTotalCreditAmount(response.data.payload.totalCredit))
         }).catch(error=>{
             console.log(error)
         })
@@ -38,7 +39,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                 email:user
             }
         }).then((response:any)=>{
-                setMyList(response.data.payload)
+                dispatch(updateMyList(response.data.payload))
             }).catch((error:any)=>{
                 console.log(error)
             })
@@ -68,9 +69,9 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             }
         }).then(response=>{
             console.log(response)
-            setAmount(response.data.payload[0].totalAmount)
-            setTotalCreditAmount(response.data.payload[0].totalCredit)
-            setTotalDebitAmount(response.data.payload[0].totalDebit)
+            dispatch(updateAmount(response.data.payload[0].totalAmount))
+            dispatch(updateTotalDebitAmount(response.data.payload[0].totalCredit))
+            dispatch(updateTotalCreditAmount(response.data.payload[0].totalDebit))
         }). catch(error=>{
             console.log(error)
         })
@@ -79,7 +80,8 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
     useEffect(()=>{
         console.log(props)
         if( props.location.state  && typeof props.location.state.user!=="undefined"){
-            setCurrentUser(props.location.state.user)
+            // setCurrentUser(props.location.state.user)
+            dispatch(setCurrentUser(props.location.state.user))
         }
         else if(typeof currentUser==="undefined"){
             navigate("/login")
@@ -98,15 +100,15 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             <h1 >Balance : {amount}</h1>
             </Col>
             <Col style={{textAlign:"right",width:"10%"}}>
-            <SignOut currentUser={currentUser} setCurrentUser={setCurrentUser}/>    
+            <SignOut  />    
             </Col>
            </Row>
            <Row >  
                <Col span={12} style={{textAlign:"center"}}>
-                   <CreditMoney setList={setList} addSubstract={addSubstractAmount} currentUser={currentUser}/>
+                   <CreditMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>
                <Col span={12} style={{textAlign:"center"}}>
-                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} currentUser={currentUser}/>
+                   <DebitMoney setList={setList} addSubstract={addSubstractAmount} />
                </Col>       
            </Row>
            <Row style={{paddingTop:"10px",paddingBottom:"10px"}}>
@@ -114,7 +116,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                <Col span={12} style={{textAlign:"center"}}><h3>Total Debit -{totalDebitAmount}</h3></Col>
            </Row>
             <Row>
-                <PrintList myList={myList} setMyList={setMyList} getData={getData} getTotalExpenseData={getTotalExpenseData} currentUser={currentUser}/>
+                <PrintList   getData={getData} getTotalExpenseData={getTotalExpenseData} />
             </Row>
         </div>
     )
