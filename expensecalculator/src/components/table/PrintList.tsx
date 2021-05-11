@@ -3,18 +3,38 @@ import { DeleteOutlined,EditOutlined,FilePdfOutlined} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import {CSVLink} from "react-csv"
 import React, { useRef } from "react"
+import axios from "axios";
 interface Iprops{
     myList:any,
     setMyList:any,
+    getData:any,
+    getTotalExpenseData:any,
+    currentUser:any
 }
 export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
   const componentRef = useRef<any>();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-    const deleteRecord=(id:any)=>{
-        // console.log(props.myList)
-        // props.setMyList(props.myList.splice(id,1))
+  const calculateTotalBalance=(record:any)=>{
+    axios.put("http://localhost:3333/api/totalExpense/removeDelete",record).then(response=>{
+      props.getTotalExpenseData(props.currentUser)
+    }).catch(error=>{
+      console.log(error)
+    })
+  }
+    const deleteRecord=(record:any)=>{
+        axios.delete("http://localhost:3333/api/expenseLog",{
+          headers:{
+            email: record.email,
+            id:record.id
+          }
+        }).then(response=>{
+          props.getData(record.email)
+          calculateTotalBalance(record)
+        }).then(error=>{
+          console.log(error)
+        })
     }
     const columns = [
         {
@@ -58,9 +78,9 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
             key: 'action',
             render: (record:any) => (
               <Space size="middle">  
-                <Button type="primary" shape="circle" ><EditOutlined /></Button>
+                {/* <Button type="primary" shape="circle" ><EditOutlined /></Button> */}
                 <Button danger type="primary" shape="circle"onClick={()=>{
-                    deleteRecord(record.id)
+                    deleteRecord(record)
                 }}><DeleteOutlined /></Button>
               </Space>
             ),

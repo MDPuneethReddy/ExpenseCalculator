@@ -114,7 +114,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
                <Col span={12} style={{textAlign:"center"}}><h3>Total Debit -{totalDebitAmount}</h3></Col>
            </Row>
             <Row>
-                <PrintList myList={myList} setMyList={setMyList}/>
+                <PrintList myList={myList} setMyList={setMyList} getData={getData} getTotalExpenseData={getTotalExpenseData} currentUser={currentUser}/>
             </Row>
         </div>
     )
