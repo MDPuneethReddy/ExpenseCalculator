@@ -45,7 +45,7 @@ export const Login:React.FC<Iprops>=(props:Iprops)=>{
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <a className="login-form-forgot" href="">
+        <a className="login-form-forgot" href="./forgotPassword">
           Forgot password
         </a>
       </Form.Item>
