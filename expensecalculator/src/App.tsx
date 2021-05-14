@@ -6,6 +6,7 @@ import { Login } from './components/auth/Login';
 import { Router} from "@reach/router"
 import { store } from './store/store';
 import {Provider} from "react-redux"
+import { ChartsMain } from './components/Charts/ChartsMain';
 function App() {
   return (
     <Provider store={store}>
@@ -13,6 +14,7 @@ function App() {
       <Registration path="/registration" />
       <Login path="/login" />
       <Main path="/" />
+      <ChartsMain path="/charts" />
       </Router>
       </Provider>
   );

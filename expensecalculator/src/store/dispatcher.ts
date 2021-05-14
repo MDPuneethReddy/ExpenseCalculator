@@ -35,6 +35,16 @@ const updateDebitCategory=(data:any)=>{
          type:ActionType.UpdateDebitCategory,payload:{data}
     }
 }
+const updateEachDebitCategory=(data:any)=>{
+    return {
+         type:ActionType.UpdateEachDebitCategory,payload:{data}
+    }
+}
+const updateEachCreditCategory=(data:any)=>{
+    return {
+         type:ActionType.UpdateEachCreditCategory,payload:{data}
+    }
+}
 export {
   updateAmount,
   updateTotalDebitAmount,
@@ -43,4 +53,6 @@ export {
   setCurrentUser,
   updateCreditCategory,
   updateDebitCategory,
+  updateEachDebitCategory,
+  updateEachCreditCategory
 };

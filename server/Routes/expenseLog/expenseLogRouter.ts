@@ -33,9 +33,9 @@ connection.then((connection:any)=>{
         const {email}=req.headers
         const queryResult = await expenseRepository
         .createQueryBuilder()
-        .select("category")
+        .select("category As id")
         .where("email = :email And type= :type",{email:email,type:"Credit"})
-        .addSelect("SUM(amount)", "creditsum")
+        .addSelect("SUM(amount)", "value")
         .groupBy("category")
         .getRawMany();
             res.send({
@@ -47,9 +47,9 @@ connection.then((connection:any)=>{
         const {email}=req.headers
         const queryResult = await expenseRepository
         .createQueryBuilder()
-        .select("category")
+        .select("category As id")
         .where("email = :email And type= :type",{email:email,type:"Debit"})
-        .addSelect("SUM(amount)", "debitsum")
+        .addSelect("SUM(amount)", "value")
         .groupBy("category")
         .getRawMany();
             res.send({

@@ -6,7 +6,9 @@ export enum ActionType {
   UpdateMyList="UPDATE_MY_LIST",
   SetCurrentUser="SET_CURRENT_USER",
   UpdateCreditCategory="UPDATE_CREDIT_CATEGORY",
-  UpdateDebitCategory="UPDATE_DEBIT_CATEGORY"
+  UpdateDebitCategory="UPDATE_DEBIT_CATEGORY",
+  UpdateEachCreditCategory="UPDATE_EACH_CREDIT_CATEGORY",
+  UpdateEachDebitCategory="UPDATE_EACH_DEBIT_CATEGORY"
 }
 
 export interface InitialState {
@@ -17,6 +19,8 @@ export interface InitialState {
     myList:Array<any>,
     creditCategory:Array<any>,
     debitCategory:Array<any>
+    eachCreditCategory:Array<any>,
+    eachDebitCategory:Array<any>
 }
 export const initialState: InitialState = {
     currentUser:undefined,
@@ -25,7 +29,9 @@ export const initialState: InitialState = {
     totalCreditAmount:0,
     myList:[],
     creditCategory:[],
-    debitCategory:[]
+    debitCategory:[],
+    eachCreditCategory:[],
+    eachDebitCategory:[]
 };
 
 export interface DispatchAction extends Action<ActionType> {
@@ -56,6 +62,12 @@ export const reducer: Reducer<InitialState, DispatchAction> = (
   }
   else if (action.type === ActionType.UpdateDebitCategory) {
     return { ...state, debitCategory: action.payload.data };
+  }
+  else if (action.type === ActionType.UpdateEachCreditCategory) {
+    return { ...state, eachCreditCategory: action.payload.data };
+  }
+  else if (action.type === ActionType.UpdateEachDebitCategory) {
+    return { ...state, eachDebitCategory: action.payload.data };
   }
   
    else 

@@ -1,5 +1,5 @@
 import { navigate, RouteComponentProps } from '@reach/router';
-import { Col, Row } from 'antd'
+import { Button, Col, Row } from 'antd'
 import React,{useEffect, useState} from 'react'
 import { CreditMoney } from './Dropdown/CreditMoney';
 import { DebitMoney } from './Dropdown/DebitMoney';
@@ -9,7 +9,6 @@ import { PrintList } from './table/PrintList';
 import { InitialState } from '../store/reducer';
 import {useSelector,useDispatch} from "react-redux"
 import { setCurrentUser, updateAmount, updateMyList, updateTotalCreditAmount, updateTotalDebitAmount } from '../store/dispatcher';
-import { PieChart } from './Charts/PieChart';
 interface Iprops extends RouteComponentProps{
     location?:any
 }
@@ -99,7 +98,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
             <Col style={{textAlign:"center",width:"90%"}}>
             <h1 >Balance : {amount}</h1>
             </Col>
-            <Col style={{textAlign:"right",width:"10%"}}>
+            <Col style={{textAlign:"right",width:"10%"}}> 
             <SignOut  />    
             </Col>
            </Row>
@@ -117,9 +116,6 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
            </Row>
             <Row>
                 <PrintList   getData={getData} getTotalExpenseData={getTotalExpenseData} />
-            </Row>
-            <Row>
-                <PieChart />
             </Row>
         </div>
     )

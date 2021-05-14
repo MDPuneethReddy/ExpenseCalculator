@@ -6,6 +6,7 @@ import React, { useRef } from "react"
 import axios from "axios";
 import { InitialState } from "../../store/reducer";
 import {useSelector} from "react-redux"
+import { navigate } from "@reach/router";
 interface Iprops{
     getData:any,
     getTotalExpenseData:any,
@@ -91,8 +92,11 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
     ]
     return(
       <div style={{width:"100%"}} >
+        <Button size="small" type="primary" onClick={()=>{
+                navigate("/charts")
+            }}>Visualize</Button>  
         <Space style={{float:"right"}}>
-          <Button type="primary">
+          <Button type="primary" size="small">
         <CSVLink
               filename={"Expense_Table.csv"}
               data={myList}
@@ -104,7 +108,7 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
               Export to CSV
             </CSVLink> 
             </Button>
-        <Button onClick={handlePrint} type="primary" danger><FilePdfOutlined /> Export to PDF </Button>
+        <Button onClick={handlePrint} size="small" type="primary" danger><FilePdfOutlined /> Export to PDF </Button>
         </Space>
         <div ref={componentRef} >
         {myList && 
