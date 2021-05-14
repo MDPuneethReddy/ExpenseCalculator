@@ -1,14 +1,16 @@
-import React, { useEffect} from "react"
+import React, { useEffect, useRef} from "react"
 import { InitialState } from "../../store/reducer";
 import {useDispatch, useSelector} from "react-redux"
 import axios from "axios";
 import { RouteComponentProps } from "@reach/router";
-import { Row } from "antd";
+import { Button, Row, Tooltip } from "antd";
 import {  ResponsiveBarDebitChart } from "./ResponsiveBarDebitChart";
 import { ResponsiveBarCreditChart } from "./ResposiveBarCreditChart";
 import { updateEachCreditCategory, updateEachDebitCategory } from "../../store/dispatcher";
 import { ResponsivePieDebitChart } from "./ResponsivePieDebitChart";
 import { ResponsivePieCreditChart } from "./ResponsivePieCreditChart";
+import { useReactToPrint } from "react-to-print";
+import { FilePdfOutlined} from '@ant-design/icons';
 interface Iprops extends RouteComponentProps{
 
 }
@@ -17,6 +19,10 @@ export const ChartsMain:React.FC<Iprops>=(props:Iprops)=>{
         (state: InitialState) => state
       );
       const dispatch = useDispatch()
+      const componentRef = useRef<any>();
+      const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+      });
     const getCreditCategoryData=()=>{
         axios.get("http://localhost:3333/api/expenseLog/getEachCredit",{
             headers:{
@@ -47,7 +53,10 @@ export const ChartsMain:React.FC<Iprops>=(props:Iprops)=>{
       }, [currentUser])
 
     return(
-        <div style={{backgroundColor:""}}>
+        <div style={{backgroundColor:""}} ref={componentRef}>
+            <Tooltip title="Export to PDF">
+        <Button style={{float:"right"}}onClick={handlePrint} type="primary" danger><FilePdfOutlined /></Button>
+        </Tooltip>
             <Row style={{paddingBottom:"30px",height:400}}>
                 <h1>Debit PieChart</h1>
                 <ResponsivePieCreditChart getCreditCategoryData={getCreditCategoryData}/>
