@@ -70,8 +70,8 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
         }).then(response=>{
             console.log(response)
             dispatch(updateAmount(response.data.payload[0].totalAmount))
-            dispatch(updateTotalDebitAmount(response.data.payload[0].totalCredit))
-            dispatch(updateTotalCreditAmount(response.data.payload[0].totalDebit))
+            dispatch(updateTotalDebitAmount(response.data.payload[0].totalDebit))
+            dispatch(updateTotalCreditAmount(response.data.payload[0].totalCredit))
         }). catch(error=>{
             console.log(error)
         })
