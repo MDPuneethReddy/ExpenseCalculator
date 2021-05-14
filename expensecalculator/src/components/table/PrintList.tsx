@@ -1,5 +1,5 @@
-import { Button, message, Space, Table} from "antd";
-import { DeleteOutlined,FilePdfOutlined} from '@ant-design/icons';
+import { Button, message, Space, Table, Tooltip} from "antd";
+import { DeleteOutlined,FilePdfOutlined,FileExcelOutlined,EyeOutlined} from '@ant-design/icons';
 import { useReactToPrint } from 'react-to-print';
 import {CSVLink} from "react-csv"
 import React, { useRef } from "react"
@@ -92,11 +92,14 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
     ]
     return(
       <div style={{width:"100%"}} >
-        <Button size="small" type="primary" onClick={()=>{
+        <Tooltip title="Visualize">
+        <Button  type="primary" onClick={()=>{
                 navigate("/charts")
-            }}>Visualize</Button>  
+            }}><EyeOutlined /></Button>  
+            </Tooltip>
         <Space style={{float:"right"}}>
-          <Button type="primary" size="small">
+          <Tooltip title="Export to CSV">
+          <Button type="primary" >
         <CSVLink
               filename={"Expense_Table.csv"}
               data={myList}
@@ -105,10 +108,13 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
                 message.success("The file is downloading")
               }}
             >
-              Export to CSV
+              <FileExcelOutlined />
             </CSVLink> 
             </Button>
-        <Button onClick={handlePrint} size="small" type="primary" danger><FilePdfOutlined /> Export to PDF </Button>
+            </Tooltip>
+           <Tooltip title="Export to PDF">
+        <Button onClick={handlePrint} type="primary" danger><FilePdfOutlined /></Button>
+        </Tooltip> 
         </Space>
         <div ref={componentRef} >
         {myList && 

@@ -93,7 +93,7 @@ const addCreditCategory=(value:any)=>{
   
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" size="small" onClick={showModal}>
         Credit<PlusOutlined />
       </Button>
       <Modal title="Add Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}> 

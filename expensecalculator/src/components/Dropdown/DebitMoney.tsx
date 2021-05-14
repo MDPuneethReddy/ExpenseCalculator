@@ -92,7 +92,7 @@ useEffect(() => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal} danger>
+      <Button type="primary" size="small" onClick={showModal} danger>
         Debit<MinusOutlined />
       </Button>
       <Modal title="Debit Money" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
