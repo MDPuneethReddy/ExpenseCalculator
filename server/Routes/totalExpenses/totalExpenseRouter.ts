@@ -7,7 +7,6 @@ connection.then(connection=>{
     totalExpenseRouter.get("/",async(req,res)=>{
         const email=req.headers.email as string
         let totalExpense=await totalExpenseRepository.find({where:{email:email}})
-        console.log("totalget",totalExpense)
         if(totalExpense.length===0){
             const body={
                         email:email,
@@ -18,7 +17,6 @@ connection.then(connection=>{
             const totalExpense=totalExpenseRepository.create(body)
             const result = await totalExpenseRepository.save(totalExpense);
             let newTotalExpense=await totalExpenseRepository.find({where:{email:email}})
-            console.log("result",result)
             res.send({
                 message:"success",
                 payload:newTotalExpense
@@ -36,7 +34,6 @@ connection.then(connection=>{
         const value=req.body.value
         const type=req.body.type
         const totalExpense=await totalExpenseRepository.findOne({where:{email:email}})
-        console.log("totalExpense put",totalExpense)
         let temp=totalExpense
         if(type==="Credit"){
             temp.totalCredit=temp.totalCredit+value
@@ -54,7 +51,6 @@ connection.then(connection=>{
         })
     })
     totalExpenseRouter.put("/removeDelete",async(req,res)=>{
-        console.log(req.body)
         const totalExpense=await totalExpenseRepository.findOne({where:{email:req.body.email}})
         let temp=totalExpense
         if(req.body.type==="Credit"){

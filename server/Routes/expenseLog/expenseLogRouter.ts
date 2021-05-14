@@ -25,11 +25,39 @@ connection.then((connection:any)=>{
         const id=req.headers.id
         const email=req.headers.email
         const expenseLogDelete=await expenseRepository.delete(id)
-        console.log(expenseLogDelete)
         res.json({
             message:"success",
         })
     })
+    expenseLogRouter.get("/getEachCredit",async(req,res)=>{
+        const {email}=req.headers
+        const queryResult = await expenseRepository
+        .createQueryBuilder()
+        .select("category")
+        .where("email = :email And type= :type",{email:email,type:"Credit"})
+        .addSelect("SUM(amount)", "creditsum")
+        .groupBy("category")
+        .getRawMany();
+            res.send({
+                message:"success",
+                payload:queryResult
+            })
+        })
+    expenseLogRouter.get("/getEachDebit",async(req,res)=>{
+        const {email}=req.headers
+        const queryResult = await expenseRepository
+        .createQueryBuilder()
+        .select("category")
+        .where("email = :email And type= :type",{email:email,type:"Debit"})
+        .addSelect("SUM(amount)", "debitsum")
+        .groupBy("category")
+        .getRawMany();
+            res.send({
+                message:"success",
+                payload:queryResult
+            })
+        })
+        
 }).catch(error=>{
     console.log(error)
 })

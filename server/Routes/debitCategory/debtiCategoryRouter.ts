@@ -7,7 +7,6 @@ connection.then(connection=>{
     debitCategoryRouter.get("/",async(req,res)=>{
         const email=req.headers.email as string
         let debitCategory=await debitCategoryRepository.find({where:{email:email}})
-        console.log("debitCategory",debitCategory)
         if(debitCategory.length===0){
             const body={
                 email:email,

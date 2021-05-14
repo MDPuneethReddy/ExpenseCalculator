@@ -9,6 +9,7 @@ import { PrintList } from './table/PrintList';
 import { InitialState } from '../store/reducer';
 import {useSelector,useDispatch} from "react-redux"
 import { setCurrentUser, updateAmount, updateMyList, updateTotalCreditAmount, updateTotalDebitAmount } from '../store/dispatcher';
+import { PieChart } from './Charts/PieChart';
 interface Iprops extends RouteComponentProps{
     location?:any
 }
@@ -62,7 +63,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
     }
 
     console.log("currentuser",currentUser)
-    const getTotalExpenseData=(user:any)=>{
+    const getTotalExpenseData=async (user:any)=>{
         axios.get("http://localhost:3333/api/totalExpense",{
             headers:{
                 email:user
@@ -80,7 +81,6 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
     useEffect(()=>{
         console.log(props)
         if( props.location.state  && typeof props.location.state.user!=="undefined"){
-            // setCurrentUser(props.location.state.user)
             dispatch(setCurrentUser(props.location.state.user))
         }
         else if(typeof currentUser==="undefined"){
@@ -117,6 +117,9 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
            </Row>
             <Row>
                 <PrintList   getData={getData} getTotalExpenseData={getTotalExpenseData} />
+            </Row>
+            <Row>
+                <PieChart />
             </Row>
         </div>
     )

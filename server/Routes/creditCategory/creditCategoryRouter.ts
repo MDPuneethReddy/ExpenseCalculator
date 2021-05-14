@@ -7,7 +7,6 @@ connection.then(connection=>{
     creditCategoryRouter.get("/",async(req,res)=>{
         const email=req.headers.email as string
         let creditCategory=await creditCategoryRepository.find({where:{email:email}})
-        console.log("creditget",creditCategory)
         if(creditCategory.length===0){
             const body={
                         email:email,
@@ -16,7 +15,6 @@ connection.then(connection=>{
             const creditCategory=creditCategoryRepository.create(body)
             const result = await creditCategoryRepository.save(creditCategory);
             let allCreditCategory=await creditCategoryRepository.find({where:{email:email}})
-            console.log("result",result)
             res.send({
                 message:"success",
                 payload:allCreditCategory
@@ -33,7 +31,6 @@ connection.then(connection=>{
         const email=req.headers.email
         const value=req.body.value
         const creditCategory=await creditCategoryRepository.findOne({where:{email:email}})
-        console.log("creditCategory",creditCategory)
         let temp=creditCategory
         temp.category.push(value)
         creditCategoryRepository.merge(creditCategory,temp)
