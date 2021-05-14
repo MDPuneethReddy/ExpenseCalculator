@@ -18,6 +18,6 @@ export default[{
     type:"sqlite",
     database:":memory:",
     entities:[expenseLog,creditCategory,debitCategory,totalExpense],
-    logging:true,
+    logging:false,
     synchronize:true
   }]
