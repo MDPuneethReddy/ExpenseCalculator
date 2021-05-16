@@ -20,4 +20,15 @@ export default[{
     entities:[expenseLog,creditCategory,debitCategory,totalExpense],
     logging:false,
     synchronize:true
+  },{
+    name:"production",
+    type:process.env.REACT_TYPEORM_TYPE,
+    host:process.env.PROD_TYPEORM_HOST,
+    port:process.env.PROD_TYPEORM_PORT,
+    username:process.env.PROD_TYPEORM_USERNAME,
+    password:process.env.PROD_TYPEORM_PASSWORD,
+    database:process.env.PROD_TYPEORM_DATABASE,
+    entities:[expenseLog,creditCategory,debitCategory,totalExpense],
+    logging:false,
+    synchronize:true
   }]
