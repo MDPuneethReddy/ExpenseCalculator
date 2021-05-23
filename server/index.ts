@@ -13,7 +13,7 @@ app.use("/api/expenseLog",expenseLogRouter)
 app.use("/api/creditCategory",creditCategoryRouter)
 app.use("/api/debitCategory",debitCategoryRouter)
 app.use("/api/totalExpense",totalExpenseRouter)
-const PORT=process.env.REACT_PORT || 3333
+const PORT=process.env.PORT || 3333
 app.get("/api",(req,res)=>{
     res.send("Welcome to backend API")
 })
