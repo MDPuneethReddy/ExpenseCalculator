@@ -1,7 +1,10 @@
+import * as PostgressConnectionStringParser from "pg-connection-string";
 import { expenseLog } from "./Routes/expenseLog/expenseLog";
 import {creditCategory} from "./Routes/creditCategory/creditCategory"
 import { debitCategory } from "./Routes/debitCategory/debitCategory";
 import { totalExpense } from "./Routes/totalExpenses/totalExpense";
+const databaseUrl: string = process.env.DATABASE_URL;
+const connectionOptions = PostgressConnectionStringParser.parse(databaseUrl);
 export default[{
     name:"development",
     type: process.env.REACT_TYPEORM_TYPE ,
@@ -23,11 +26,11 @@ export default[{
   },{
     name:"production",
     type:process.env.REACT_TYPEORM_TYPE,
-    host:process.env.PROD_TYPEORM_HOST,
-    port:process.env.PROD_TYPEORM_PORT,
-    username:process.env.PROD_TYPEORM_USERNAME,
-    password:process.env.PROD_TYPEORM_PASSWORD,
-    database:process.env.PROD_TYPEORM_DATABASE,
+    host:connectionOptions.host,
+    port:connectionOptions.port,
+    username:connectionOptions.user,
+    password:connectionOptions.password,
+    database:connectionOptions.database,
     entities:[expenseLog,creditCategory,debitCategory,totalExpense],
     logging:false,
     synchronize:true
