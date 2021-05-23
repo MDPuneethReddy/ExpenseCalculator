@@ -1,3 +1,5 @@
 # ExpenseCalculator
-[checkout complete app is running at](https://expenses-analyser.netlify.app/)
-[backend is running at](https://expenses-analyser.herokuapp.com/)
+# FrontEnd
+checkout complete app is running [here](https://expenses-analyser.netlify.app/)
+# Backend
+backend is running [here](https://expenses-analyser.herokuapp.com/)
