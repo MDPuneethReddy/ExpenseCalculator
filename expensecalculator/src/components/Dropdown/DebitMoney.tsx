@@ -20,6 +20,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
   const dispatch = useDispatch()
+  const url=process.env.REACT_APP_BACKEND_URL|| "http://localhost:3333"
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -54,7 +55,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
   };
 
   const getCategories=async(user:any)=>{
-    axios.get("http://localhost:3333/api/debitCategory",{
+    axios.get(`${url}/api/debitCategory`,{
         headers:{
             email:user
         }
@@ -72,7 +73,7 @@ export const DebitMoney:React.FC<Iprops> = (props:Iprops) => {
 }
 
 const addDebitCategory=(value:any)=>{
-  axios.put("http://localhost:3333/api/debitCategory",{
+  axios.put(`${url}/api/debitCategory`,{
       value:value
   },{
     headers:{

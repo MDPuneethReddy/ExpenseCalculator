@@ -18,13 +18,14 @@ export const ChartsMain:React.FC<Iprops>=(props:Iprops)=>{
     const { currentUser } = useSelector<InitialState, InitialState>(
         (state: InitialState) => state
       );
+      const url=process.env.REACT_APP_BACKEND_URL|| "http://localhost:3333"
       const dispatch = useDispatch()
       const componentRef = useRef<any>();
       const handlePrint = useReactToPrint({
         content: () => componentRef.current,
       });
     const getCreditCategoryData=()=>{
-        axios.get("http://localhost:3333/api/expenseLog/getEachCredit",{
+        axios.get(`${url}/api/expenseLog/getEachCredit`,{
             headers:{
                 email:currentUser
             }
@@ -36,7 +37,7 @@ export const ChartsMain:React.FC<Iprops>=(props:Iprops)=>{
         })
     }
     const getDebitCategoryData=()=>{
-        axios.get("http://localhost:3333/api/expenseLog/getEachDebit",{
+        axios.get(`${url}/api/expenseLog/getEachDebit`,{
             headers:{
                 email:currentUser
             }

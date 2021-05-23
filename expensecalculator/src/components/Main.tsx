@@ -16,9 +16,10 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
     const { currentUser,amount,myList,totalCreditAmount,totalDebitAmount } = useSelector<InitialState, InitialState>(
         (state: InitialState) => state
       );
+      const url=process.env.REACT_APP_BACKEND_URL|| "http://localhost:3333"
     const dispatch=useDispatch()
     const addSubstractAmount=(value:number,type:string)=>{
-        axios.put("http://localhost:3333/api/totalExpense",{
+        axios.put(`${url}/api/totalExpense`,{
             email:currentUser,
             value:value,
             type:type
@@ -34,7 +35,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
 
     const getData=async (user:any)=>{
         console.log(user)
-        axios.get("http://localhost:3333/api/expenseLog",{
+        axios.get(`${url}/api/expenseLog`,{
             headers:{
                 email:user
             }
@@ -46,7 +47,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
     }
 
     const setList=async (amount:number,description:string,type:string, category?:string)=>{
-        axios.post("http://localhost:3333/api/expenseLog",{
+        axios.post(`${url}/api/expenseLog`,{
             email:currentUser,
             amount:amount,
             description:description,
@@ -63,7 +64,7 @@ export const Main:React.FC<Iprops>=(props:Iprops)=>{
 
     console.log("currentuser",currentUser)
     const getTotalExpenseData=async (user:any)=>{
-        axios.get("http://localhost:3333/api/totalExpense",{
+        axios.get(`${url}/api/totalExpense`,{
             headers:{
                 email:user
             }

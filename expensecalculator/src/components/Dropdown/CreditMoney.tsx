@@ -17,6 +17,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   const [category,setCategory]=useState<string>("")
   const [selected,setSelected]=useState<any>()
   const dispatch = useDispatch()
+  const url=process.env.REACT_APP_BACKEND_URL|| "http://localhost:3333"
   const { creditCategory,currentUser } = useSelector<InitialState, InitialState>(
     (state: InitialState) => state
   );
@@ -55,7 +56,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
   };
 
   const getCategories=async(user:any)=>{
-    axios.get("http://localhost:3333/api/creditCategory",{
+    axios.get(`${url}/api/creditCategory`,{
         headers:{
             email:user
         }
@@ -73,7 +74,7 @@ export const CreditMoney:React.FC<Iprops> = (props:Iprops) => {
 }
 
 const addCreditCategory=(value:any)=>{
-  axios.put("http://localhost:3333/api/creditCategory",{
+  axios.put(`${url}/api/creditCategory`,{
       value:value
   },{
     headers:{

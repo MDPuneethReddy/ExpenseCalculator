@@ -15,19 +15,20 @@ export const PrintList:React.FC<Iprops>=(props:Iprops)=>{
   const { currentUser,myList } = useSelector<InitialState, InitialState>(
     (state: InitialState) => state
   );
+  const url=process.env.REACT_APP_BACKEND_URL|| "http://localhost:3333"
   const componentRef = useRef<any>();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
   const calculateTotalBalance=(record:any)=>{
-    axios.put("http://localhost:3333/api/totalExpense/removeDelete",record).then(response=>{
+    axios.put(`${url}/api/totalExpense/removeDelete`,record).then(response=>{
       props.getTotalExpenseData(currentUser)
     }).catch(error=>{
       console.log(error)
     })
   }
     const deleteRecord=(record:any)=>{
-        axios.delete("http://localhost:3333/api/expenseLog",{
+        axios.delete(`${url}/api/expenseLog`,{
           headers:{
             email: record.email,
             id:record.id
